@@ -8,5 +8,6 @@
 
 client = IEX::Api::Client.new(
     publishable_token: 'pk_2e688a1cf8f444d3a05bc370ffe80a52',
-    endpoint: 'https://cloud.iexapis.com/v1'
+    secret_token: 'sk_2265ce2d60a54e578dd7b80fc729a0c7',
+    endpoint: 'https://sandbox.iexapis.com/v1'
 )
