@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+client = IEX::Api::Client.new(
+    publishable_token: 'pk_2e688a1cf8f444d3a05bc370ffe80a52',
+    secret_token: 'sk_0055db9b4d7848fab59a9df3285ef9fc',
+    endpoint: 'https://cloud.iexapis.com/v1'
+)
