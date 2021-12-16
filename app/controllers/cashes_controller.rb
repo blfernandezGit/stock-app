@@ -1,4 +1,5 @@
 class CashesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_cash, only: %i[ show edit update destroy ]
 
   # GET /cashes or /cashes.json
