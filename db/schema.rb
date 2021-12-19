@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_16_134553) do
+ActiveRecord::Schema.define(version: 2021_12_19_113916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,16 +25,22 @@ ActiveRecord::Schema.define(version: 2021_12_16_134553) do
   end
 
   create_table "inventories", force: :cascade do |t|
-    t.string "stock_name"
     t.integer "quantity"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "stock_id"
     t.index ["user_id"], name: "index_inventories_on_user_id"
   end
 
+  create_table "stocks", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "transactions", force: :cascade do |t|
-    t.string "stock_name"
     t.integer "quantity"
     t.decimal "unit_price"
     t.string "type"
@@ -42,6 +48,7 @@ ActiveRecord::Schema.define(version: 2021_12_16_134553) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "stock_id"
     t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
@@ -61,6 +68,8 @@ ActiveRecord::Schema.define(version: 2021_12_16_134553) do
   end
 
   add_foreign_key "cashes", "users"
+  add_foreign_key "inventories", "stocks"
   add_foreign_key "inventories", "users"
+  add_foreign_key "transactions", "stocks"
   add_foreign_key "transactions", "users"
 end
