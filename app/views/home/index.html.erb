@@ -1,0 +1,11 @@
+<div>Stock Overflow</div>
+
+<% if user_signed_in? %>
+    <%= link_to dashboard_path do%>
+    Start Now!
+    <% end %>
+<% else %>
+    <%= link_to  new_user_registration_path do%>
+        Start Now!
+    <% end %>
+<% end %>
