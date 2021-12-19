@@ -10,5 +10,9 @@
   <%= @stock.code %>
 </p>
 
-<%= link_to 'Edit', edit_stock_path(@stock) %> |
+<p>
+  <strong>Price:</strong>
+  <%= @stock.price %>
+</p>
+
 <%= link_to 'Back', stocks_path %>
