@@ -38,6 +38,24 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Enable email sending
+  config.action_mailer.perform_deliveries = true
+
+  # Default mailer url options
+  config.action_mailer.delivery_method = :smtp
+config.action_mailer.default_url_options = { host: 'localhost:3000' } #TODO: change to appropriate host for deployment
+
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  user_name:      'stockoverflowmailer@gmail.com',
+  password:       'cogHec-konwyc-0kymsa',
+  domain:         'localhost:3000',
+  address:       'smtp.gmail.com',
+  port:          '587',
+  authentication: :plain,
+  enable_starttls_auto: true
+}
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
