@@ -12,34 +12,24 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :stock_name %>
-    <%= form.text_field :stock_name %>
-  </div>
-
-  <div class="field">
     <%= form.label :quantity %>
     <%= form.number_field :quantity %>
   </div>
 
   <div class="field">
     <%= form.label :unit_price %>
-    <%= form.text_field :unit_price %>
+    <%= form.number_field :unit_price, disabled: true, value: params[:price]%>
+    <%= form.hidden_field :unit_price, value: params[:price]%>
   </div>
 
   <div class="field">
-    <%= form.label :type %>
-    <%= form.text_field :type %>
+      <%= form.label "Stock" %>
+    <%= form.text_field "Stock", disabled: true, value: Stock.find(params[:stock_id]).name%>
   </div>
 
-  <div class="field">
-    <%= form.label :is_fulfilled %>
-    <%= form.check_box :is_fulfilled %>
-  </div>
+  <%= form.hidden_field :stock_id, value: params[:stock_id] %>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
+  <%= form.hidden_field :transaction_type, value: params[:transaction_type]%>
 
   <div class="actions">
     <%= form.submit %>

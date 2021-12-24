@@ -19,6 +19,7 @@
         <td><%= stock.code %></td>
         <td><%= stock.price %></td>
         <td><%= link_to 'Show', stock %></td>
+        <td><%= link_to new_transaction_path(:transaction_type => "Buy", :stock_id => stock.id, :price => stock.price) do%>Buy<% end %></td>
       </tr>
     <% end %>
   </tbody>

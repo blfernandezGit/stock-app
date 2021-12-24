@@ -18,10 +18,10 @@
   <tbody>
     <% @transactions.each do |transaction| %>
       <tr>
-        <td><%= transaction.stock_name %></td>
+        <td><%= Stock.find(transaction.stock_id).name %></td>
         <td><%= transaction.quantity %></td>
         <td><%= transaction.unit_price %></td>
-        <td><%= transaction.type %></td>
+        <td><%= transaction.transaction_type %></td>
         <td><%= transaction.is_fulfilled %></td>
         <td><%= transaction.user_id %></td>
         <td><%= link_to 'Show', transaction %></td>

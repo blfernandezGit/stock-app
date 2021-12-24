@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-  before_action :authenticate_user! 
+  before_action :authenticate_user!, :get_user
   before_action :set_transaction, only: %i[ show edit update destroy ]
 
   # GET /transactions or /transactions.json
@@ -13,7 +13,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/new
   def new
-    @transaction = Transaction.new
+    @transaction = @user.transactions.build
   end
 
   # GET /transactions/1/edit
@@ -22,17 +22,32 @@ class TransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
-    @transaction = Transaction.new(transaction_params)
+    case transaction_params[:transaction_type]
+    when 'Buy'
 
-    respond_to do |format|
-      if @transaction.save
-        format.html { redirect_to @transaction, notice: "Transaction was successfully created." }
-        format.json { render :show, status: :created, location: @transaction }
+      @transaction = @user.transactions.build(transaction_params)
+      @inventory = Inventory.find_by(stock_id: transaction_params[:stock_id])
+
+      if @inventory
+        @inventory.update(quantity: @inventory.quantity + transaction_params[:quantity].to_i)
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+        @inventory = @user.inventories.build(stock_id: transaction_params[:stock_id], quantity: transaction_params[:quantity])
       end
+
+
+      byebug
+      respond_to do |format|
+        if @transaction.save && @inventory.save
+          format.html { redirect_to stocks_path, notice: "Transaction was successfully created." }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+        end
+      end
+
+    when 'Sell'
     end
+
+    byebug
   end
 
   # PATCH/PUT /transactions/1 or /transactions/1.json
@@ -58,6 +73,9 @@ class TransactionsController < ApplicationController
   end
 
   private
+    def get_user
+      @user = User.find(current_user.id)
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
       @transaction = Transaction.find(params[:id])
@@ -65,6 +83,6 @@ class TransactionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def transaction_params
-      params.require(:transaction).permit(:stock_name, :quantity, :unit_price, :type, :is_fulfilled, :user_id)
+      params.require(:transaction).permit(:stock_id, :quantity, :unit_price, :transaction_type, :is_fulfilled, :user_id)
     end
 end

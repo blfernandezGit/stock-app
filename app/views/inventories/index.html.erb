@@ -15,7 +15,7 @@
   <tbody>
     <% @inventories.each do |inventory| %>
       <tr>
-        <td><%= inventory.stock_name %></td>
+        <td><%= Stock.find(inventory.stock_id).name %></td>
         <td><%= inventory.quantity %></td>
         <td><%= inventory.user_id %></td>
         <td><%= link_to 'Show', inventory %></td>
