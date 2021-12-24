@@ -24,7 +24,6 @@ class TransactionsController < ApplicationController
   def create
     case transaction_params[:transaction_type]
     when 'Buy'
-
       @transaction = @user.transactions.build(transaction_params)
       @inventory = Inventory.find_by(stock_id: transaction_params[:stock_id])
 
@@ -34,8 +33,8 @@ class TransactionsController < ApplicationController
         @inventory = @user.inventories.build(stock_id: transaction_params[:stock_id], quantity: transaction_params[:quantity])
       end
 
+      @transaction.is_fulfilled = true
 
-      byebug
       respond_to do |format|
         if @transaction.save && @inventory.save
           format.html { redirect_to stocks_path, notice: "Transaction was successfully created." }
@@ -46,8 +45,6 @@ class TransactionsController < ApplicationController
 
     when 'Sell'
     end
-
-    byebug
   end
 
   # PATCH/PUT /transactions/1 or /transactions/1.json
