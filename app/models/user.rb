@@ -6,4 +6,12 @@ class User < ApplicationRecord
 
   has_many :transactions, dependent: :destroy
   has_many :inventories, dependent: :destroy
+
+  after_create :add_user_cash_data
+
+  private 
+
+  def add_user_cash_data
+    @cashes = Cash.create(balance: 0, user_id: self.id)
+  end
 end
