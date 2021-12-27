@@ -19,7 +19,7 @@
         <td><%= Stock.find(inventory.stock_id).name %></td>
         <td><%= inventory.quantity %></td>
         <td><%= Stock.find(inventory.stock_id).price %></td>
-        <td><%= ( Stock.find(inventory.stock_id).price * inventory.quantity ).round(2) %></td>
+        <td><%= inventory.market_value %></td>
         <td><%= link_to 'Show', inventory %></td>
         <td><%= link_to 'Edit', edit_inventory_path(inventory) %></td>
         <td><%= link_to 'Destroy', inventory, method: :delete, data: { confirm: 'Are you sure?' } %></td>
