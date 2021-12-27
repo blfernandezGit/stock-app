@@ -4,7 +4,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions or /transactions.json
   def index
-    @transactions = Transaction.all
+    @transactions = @user.transactions
   end
 
   # GET /transactions/1 or /transactions/1.json
@@ -25,25 +25,49 @@ class TransactionsController < ApplicationController
     case transaction_params[:transaction_type]
     when 'Buy'
       @transaction = @user.transactions.build(transaction_params)
-      @inventory = Inventory.find_by(stock_id: transaction_params[:stock_id])
+      @inventory = @user.inventories.find_by(stock_id: transaction_params[:stock_id])
 
+      byebug
       if @inventory
-        @inventory.update(quantity: @inventory.quantity + transaction_params[:quantity].to_i)
+        @inventory.update!(quantity: @inventory.quantity + transaction_params[:quantity].to_i)
       else
         @inventory = @user.inventories.build(stock_id: transaction_params[:stock_id], quantity: transaction_params[:quantity])
       end
 
       @transaction.is_fulfilled = true
-
-      respond_to do |format|
-        if @transaction.save && @inventory.save
-          format.html { redirect_to stocks_path, notice: "Transaction was successfully created." }
+        
+      if update_cash_balance
+        if @transaction.save && @inventory.save && @cash.save
+          redirect_to inventories_path, notice: "Buy transaction completed."
         else
-          format.html { render :new, status: :unprocessable_entity }
+          redirect_to stocks_path, notice: "Something went wrong."
         end
+      else
+        redirect_to({ :controller=>'transactions', :action=>'new', :transaction_type=>transaction_params[:transaction_type], :stock_id=>transaction_params[:stock_id], :price=>transaction_params[:unit_price] }, danger: "Someting went wrong.")
       end
 
     when 'Sell'
+      @transaction = @user.transactions.build(transaction_params)
+      @inventory = Inventory.find_by(stock_id: transaction_params[:stock_id])
+
+      if @inventory.quantity > transaction_params[:quantity].to_i
+        @inventory.update(quantity: @inventory.quantity - transaction_params[:quantity].to_i)
+        checker = true
+      elsif @inventory.quantity == transaction_params[:quantity].to_i
+        @inventory.destroy
+        checker = true
+      end
+
+      if checker
+        if @transaction.save && @inventory.save
+          redirect_to inventories_path, notice: "Sell transaction completed."
+        else
+          redirect_to stocks_path, notice: "Something went wrong."
+        end
+      else
+        redirect_to({ :controller=>'transactions', :action=>'new', :transaction_type=>transaction_params[:transaction_type], :stock_id=>transaction_params[:stock_id], :price=>transaction_params[:unit_price] }, danger: "Someting went wrong.")
+      end
+
     end
   end
 
@@ -81,5 +105,11 @@ class TransactionsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def transaction_params
       params.require(:transaction).permit(:stock_id, :quantity, :unit_price, :transaction_type, :is_fulfilled, :user_id)
+    end
+
+    def update_cash_balance
+      @cash = Cash.find_by(user_id: @user.id)
+      @cash.update!(balance: @cash.balance - transaction_params[:quantity].to_i * Stock.find(transaction_params[:stock_id]).price)
+      return !@cash.balance.negative?
     end
 end
