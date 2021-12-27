@@ -1,10 +1,10 @@
 class InventoriesController < ApplicationController
-  before_action :authenticate_user! 
+  before_action :authenticate_user!, :get_user
   before_action :set_inventory, only: %i[ show edit update destroy ]
 
   # GET /inventories or /inventories.json
   def index
-    @inventories = Inventory.all
+    @inventories = @user.inventories
   end
 
   # GET /inventories/1 or /inventories/1.json
@@ -58,6 +58,9 @@ class InventoriesController < ApplicationController
   end
 
   private
+    def get_user
+      @user = User.find(current_user.id)
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_inventory
       @inventory = Inventory.find(params[:id])
