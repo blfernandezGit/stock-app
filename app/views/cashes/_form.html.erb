@@ -12,19 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :balance %>
-    <%= form.text_field :balance %>
+    <%= form.label "Cash In Amount" %>
+    <%= form.text_field :balance, :value => 0.0 %>
   </div>
 
-  <div class="field">
-    <%= form.label :last_cash_in_amt %>
-    <%= form.text_field :last_cash_in_amt %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
+  <%= form.hidden_field :user_id, value: current_user.id%>
 
   <div class="actions">
     <%= form.submit %>
