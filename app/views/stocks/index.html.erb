@@ -19,9 +19,11 @@
         <td><%= stock.code %></td>
         <td><%= stock.price %></td>
         <td><%= link_to 'Show', stock %></td>
-        <td><%= link_to new_transaction_path(:transaction_type => "Buy", :stock_id => stock.id, :price => stock.price) do%>Buy<% end %></td>
-        <% if current_user.inventories.find_by(stock_id: stock.id) %>
-        <td><%= link_to new_transaction_path(:transaction_type => "Sell", :stock_id => stock.id, :price => stock.price) do%>Sell<% end %></td>
+        <% if !current_user.admin? %>
+          <td><%= link_to new_transaction_path(:transaction_type => "Buy", :stock_id => stock.id, :price => stock.price) do%>Buy<% end %></td>
+          <% if current_user.inventories.find_by(stock_id: stock.id) %>
+          <td><%= link_to new_transaction_path(:transaction_type => "Sell", :stock_id => stock.id, :price => stock.price) do%>Sell<% end %></td>
+          <% end %>
         <% end %>
       </tr>
     <% end %>

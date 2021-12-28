@@ -1,5 +1,5 @@
 class CashesController < ApplicationController
-  before_action :authenticate_user!, :get_user
+  before_action :authenticate_client!, :get_user
   before_action :set_cash, only: %i[ show edit update destroy ]
 
   # GET /cashes/1/edit

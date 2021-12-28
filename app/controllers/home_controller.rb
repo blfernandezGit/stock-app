@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-    before_action :authenticate_user!, only: %i[ show ]
+    before_action :authenticate_admin!, only: %i[ show ]
     def index
         render :index
     end

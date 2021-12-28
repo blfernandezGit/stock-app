@@ -9,6 +9,10 @@ class User < ApplicationRecord
 
   after_create :add_user_cash_data
 
+  def admin?
+    self.role == 'admin'
+  end
+  
   private 
 
   def add_user_cash_data
