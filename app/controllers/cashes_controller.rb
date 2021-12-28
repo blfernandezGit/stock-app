@@ -9,7 +9,7 @@ class CashesController < ApplicationController
   # PATCH/PUT /cashes/1 or /cashes/1.json
   def update
     respond_to do |format|
-      if @cash.update(balance: @cash.balance + cash_params[:balance].to_d)
+      if @cash.update(balance: @cash.balance + cash_params[:balance].to_d, last_cash_in_amt: cash_params[:balance].to_d)
         format.html { redirect_to inventories_path, notice: "Cash in was successful." }
       else
         format.html { render :edit, status: :unprocessable_entity }
