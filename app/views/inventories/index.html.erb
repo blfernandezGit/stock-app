@@ -27,3 +27,5 @@
 <br>
 
 <%= link_to 'Cash In', edit_cash_path(Cash.find_by(user_id: current_user.id)) %>
+<%= link_to 'Market', stocks_path%>
+<%= link_to 'Transaction History', transactions_path%>

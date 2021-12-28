@@ -27,7 +27,6 @@ class TransactionsController < ApplicationController
       @transaction = @user.transactions.build(transaction_params)
       @inventory = @user.inventories.find_by(stock_id: transaction_params[:stock_id])
 
-      byebug
       if @inventory
         @inventory.update!(quantity: @inventory.quantity + transaction_params[:quantity].to_i)
       else
@@ -36,7 +35,7 @@ class TransactionsController < ApplicationController
 
       @transaction.is_fulfilled = true
         
-      if update_cash_balance
+      if update_cash_balance_buy
         if @transaction.save && @inventory.save && @cash.save
           redirect_to inventories_path, notice: "Buy transaction completed."
         else
@@ -59,9 +58,10 @@ class TransactionsController < ApplicationController
       end
 
       if checker
-        if @transaction.save && @inventory.save
+        if @transaction.save && @inventory.save && update_cash_balance_sell
           redirect_to inventories_path, notice: "Sell transaction completed."
         else
+          @transaction.destroy
           redirect_to stocks_path, notice: "Something went wrong."
         end
       else
@@ -96,6 +96,7 @@ class TransactionsController < ApplicationController
   private
     def get_user
       @user = User.find(current_user.id)
+      @cash = Cash.find_by(user_id: @user.id)
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
@@ -107,9 +108,12 @@ class TransactionsController < ApplicationController
       params.require(:transaction).permit(:stock_id, :quantity, :unit_price, :transaction_type, :is_fulfilled, :user_id)
     end
 
-    def update_cash_balance
-      @cash = Cash.find_by(user_id: @user.id)
+    def update_cash_balance_buy
       @cash.update!(balance: @cash.balance - transaction_params[:quantity].to_i * Stock.find(transaction_params[:stock_id]).price)
       return !@cash.balance.negative?
+    end
+
+    def update_cash_balance_sell
+      @cash.update!(balance: @cash.balance + transaction_params[:quantity].to_i * Stock.find(transaction_params[:stock_id]).price)
     end
 end
