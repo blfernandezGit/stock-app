@@ -9,8 +9,18 @@ class User < ApplicationRecord
 
   after_create :add_user_cash_data
 
+  validates :full_name, presence: true
+
   def admin?
     self.role == 'admin'
+  end
+
+  def rejected?
+    self.status == 'rejected'
+  end
+
+  def accepted?
+    self.status == 'accepted'
   end
   
   private 

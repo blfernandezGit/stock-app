@@ -1,0 +1,46 @@
+<h1>Create New Client Account</h1>
+
+<%= form_with scope: :user, url: create_client_path, local: true do |form|%>
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited client details from being saved:</h2>
+
+        <ul>
+            <% @user.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+            <% end %>
+        </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+        <%= form.label :full_name %>
+        <%= form.text_field :full_name %>
+    </div>
+
+    <div class="field">
+        <%= form.label :email %>
+        <%= form.text_field :email %>
+    </div>
+
+    <div class="field">
+        <%= form.label :password %>
+        <%= form.password_field :password %>
+    </div>
+
+    <div class="field">
+        <%= form.label :password_confirmation %>
+        <%= form.password_field :password_confirmation %>
+    </div>
+
+    <div class="field">
+        <%= form.label :status %>
+        <%= form.select :status, ['accepted', 'pending'], value: 'accepted' %>
+    </div>
+
+    <div class="actions">
+        <%= form.submit 'Create' %>
+    </div>
+<% end %>
+
+<%= link_to 'Back', client_list_path %>

@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<%= form_with scope: :user, url: client_action_path(:client_action => 'Accept'), local: true do |form|%>
+  <h1>Clients</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th colspan="1"></th>
+        <th>Client name</th>
+        <th>Registration Status</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td>
+          <% if user.status == 'pending' %>
+            <%= check_box_tag "user_ids[]", user.id %>
+          <% end %>
+          </td>
+          <td><%= user.full_name %></td>
+          <td><%= user.status %></td>
+          <td><%= link_to 'Show', client_path(user) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+    <div class="actions">
+        <%= form.submit "Accept" %>
+        <%= form.submit "Reject", formaction: client_action_path(:client_action => 'Reject') %>
+    </div>
+
+<% end %>
+
+<br>
+
+<%= link_to 'Create Client Account', new_client_path %>

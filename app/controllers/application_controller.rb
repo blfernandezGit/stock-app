@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
     def after_sign_in_path_for(_resource)
         if current_user.admin?
-            '/admin/transactions'
+            client_list_path
         else
             inventories_path
         end
@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
         def authenticate_client!
             authenticate_user!
-            redirect_to '/admin/transactions', status: :forbidden unless !current_user.admin?
+            redirect_to client_list_path, status: :forbidden unless !current_user.admin?
         end
 
         def configure_permitted_parameters
