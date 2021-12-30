@@ -1,4 +1,4 @@
-<%= form_with(model: cash) do |form| %>
+<%= form_with scope: :cash, url: cash_in_update_path, local: true do |form|%>
   <% if cash.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(cash.errors.count, "error") %> prohibited this cash from being saved:</h2>

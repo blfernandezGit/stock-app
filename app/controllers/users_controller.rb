@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
-    before_action :set_user, only: %i[ show edit update destroy ]
+    before_action :set_user, only: %i[ show edit update ]
 
     def index
         @users = User.where(role: 'trader').order('full_name asc')
-        @pending = User.where(status: 'pending')
-        @accepted = User.where(status: 'accepted')
-        @rejected = User.where(status: 'rejected')
+        # @pending = User.where(status: 'pending')
+        # @accepted = User.where(status: 'accepted')
+        # @rejected = User.where(status: 'rejected')
     end
 
     def show

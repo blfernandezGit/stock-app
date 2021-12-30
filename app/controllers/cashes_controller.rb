@@ -1,12 +1,9 @@
 class CashesController < ApplicationController
-  before_action :authenticate_client!, :get_user
-  before_action :set_cash, only: %i[ show edit update destroy ]
+  before_action :authenticate_client!, :get_user, :set_cash
 
-  # GET /cashes/1/edit
   def edit
   end
 
-  # PATCH/PUT /cashes/1 or /cashes/1.json
   def update
     respond_to do |format|
       if @cash.update(balance: @cash.balance + cash_params[:balance].to_d, last_cash_in_amt: cash_params[:balance].to_d)

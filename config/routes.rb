@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   resources :stocks
   resources :transactions
   resources :inventories
-  resources :cashes
   devise_for :users, :controllers => {:registrations => "users/registrations",
     :sessions => "users/sessions"}
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
@@ -17,4 +16,7 @@ Rails.application.routes.draw do
   get '/admin/client/:id/edit' => 'users#edit', as: 'edit_client'
   post '/admin/client/:id/update' => 'users#update', as: 'update_client'
   post '/admin/clients/action' => 'users#client_action', as: 'client_action'
+
+  get '/cash_in' => 'cashes#edit', as: 'cash_in_edit'
+  get '/cash_in/update' => 'cashes#update', as: 'cash_in_update'
 end
