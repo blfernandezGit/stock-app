@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception, prepend: true
 
+    add_flash_types :danger
+
     before_action :configure_permitted_parameters, if: :devise_controller?
 
     def after_sign_in_path_for(_resource)
