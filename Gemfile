@@ -30,9 +30,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 # User authentication
 gem 'devise'
-# Use devise in rspec
-gem 'factory_bot_rails'
-gem 'faker'
 
 # Stock market prices
 gem 'iex-ruby-client'
@@ -63,6 +60,9 @@ group :test do
   # Add ruby linter in test
   gem 'rubocop-rspec', require: false
   gem 'rubocop-rails', require: false
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'shoulda-matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
