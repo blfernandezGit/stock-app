@@ -1,5 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Stock, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'validations' do
+    it { expect(described_class.new).to validate_uniqueness_of(:code) }
+  end
 end

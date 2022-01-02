@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Cash, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { expect(described_class.new).to validate_numericality_of(:balance).is_greater_than_or_equal_to(0) }
+
+  it { is_expected.to allow_value(1).for(:balance) }
+  it { is_expected.to allow_value(0).for(:balance) }
+  it { is_expected.not_to allow_value(-1).for(:balance) }
 end
