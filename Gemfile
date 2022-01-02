@@ -32,6 +32,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
 # Use devise in rspec
 gem 'factory_bot_rails'
+gem 'faker'
 
 # Stock market prices
 gem 'iex-ruby-client'
