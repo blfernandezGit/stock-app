@@ -13,118 +13,49 @@
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/cashes", type: :request do
-  
-  # Cash. As you add validations to Cash, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
-  describe "GET /index" do
-    it "renders a successful response" do
-      Cash.create! valid_attributes
-      get cashes_url
-      expect(response).to be_successful
-    end
+  before(:each) do
+    sign_in create(:user)
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
-      cash = Cash.create! valid_attributes
-      get cash_url(cash)
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /new" do
-    it "renders a successful response" do
-      get new_cash_url
-      expect(response).to be_successful
-    end
-  end
+  # let(:invalid_attributes) {
+  #   {last_cash_in_amt: -1}
+  # }
 
   describe "GET /edit" do
     it "render a successful response" do
-      cash = Cash.create! valid_attributes
-      get edit_cash_url(cash)
+      cash = create :cash
+      get cash_in_edit_path(cash)
       expect(response).to be_successful
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Cash" do
-        expect {
-          post cashes_url, params: { cash: valid_attributes }
-        }.to change(Cash, :count).by(1)
-      end
+  # describe "PATCH /update" do
+  #   context "with valid parameters" do
+  #     let(:new_attributes) {
+  #       {last_cash_in_amt: 1}
+  #     }
 
-      it "redirects to the created cash" do
-        post cashes_url, params: { cash: valid_attributes }
-        expect(response).to redirect_to(cash_url(Cash.last))
-      end
-    end
+  #     it "updates the requested cash" do
+  #       cash = create :cash
+  #       post cash_in_update_path(cash), params: { cash: new_attributes, format: :html }
+  #       cash.reload
+  #       expect(response).to be_successful
+  #     end
 
-    context "with invalid parameters" do
-      it "does not create a new Cash" do
-        expect {
-          post cashes_url, params: { cash: invalid_attributes }
-        }.to change(Cash, :count).by(0)
-      end
+  #     it "redirects to inventories" do
+  #       cash = create :cash
+  #       post cash_in_update_path(cash), params: { cash: new_attributes, format: :html }
+  #       cash.reload
+  #       expect(response).to redirect_to(inventories_path)
+  #     end
+  #   end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
-        post cashes_url, params: { cash: invalid_attributes }
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested cash" do
-        cash = Cash.create! valid_attributes
-        patch cash_url(cash), params: { cash: new_attributes }
-        cash.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "redirects to the cash" do
-        cash = Cash.create! valid_attributes
-        patch cash_url(cash), params: { cash: new_attributes }
-        cash.reload
-        expect(response).to redirect_to(cash_url(cash))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        cash = Cash.create! valid_attributes
-        patch cash_url(cash), params: { cash: invalid_attributes }
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested cash" do
-      cash = Cash.create! valid_attributes
-      expect {
-        delete cash_url(cash)
-      }.to change(Cash, :count).by(-1)
-    end
-
-    it "redirects to the cashes list" do
-      cash = Cash.create! valid_attributes
-      delete cash_url(cash)
-      expect(response).to redirect_to(cashes_url)
-    end
+  #   context "with invalid parameters" do
+  #     it "renders a successful response (i.e. to display the 'edit' template)" do
+  #       cash = create :cash
+  #       post cash_in_update_path(cash), params: { cash: invalid_attributes, format: :html }
+  #       expect(response).to be_successful
+  #     end
+  #   end
   end
 end

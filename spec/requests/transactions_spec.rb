@@ -13,49 +13,52 @@
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/transactions", type: :request do
-  
-  # Transaction. As you add validations to Transaction, be sure to
-  # adjust the attributes here as well.
+  before(:each) do
+    Stock.destroy_all
+    sign_in create(:user)
+    Cash.last.update(balance: 1000)
+  end
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      quantity: 1,
+      transaction_type: 'Buy',
+      stock_id: Stock.last.id,
+      unit_price: Stock.last.price,
+      user: User.last.id
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      quantity: -1,
+      transaction_type: 'Buy',
+      stock_id: Stock.last.id,
+      unit_price: Stock.last.price,
+      user: User.last.id
+    }
   }
 
   describe "GET /index" do
     it "renders a successful response" do
-      Transaction.create! valid_attributes
+      create :transaction
       get transactions_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /show" do
-    it "renders a successful response" do
-      transaction = Transaction.create! valid_attributes
-      get transaction_url(transaction)
       expect(response).to be_successful
     end
   end
 
   describe "GET /new" do
     it "renders a successful response" do
-      get new_transaction_url
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET /edit" do
-    it "render a successful response" do
-      transaction = Transaction.create! valid_attributes
-      get edit_transaction_url(transaction)
+      stock = create :stock
+      get new_transaction_url(:transaction_type => "Sell", :stock_id => stock.id, :price => stock.price)
       expect(response).to be_successful
     end
   end
 
   describe "POST /create" do
+    before(:each) do
+      create :stock
+    end
     context "with valid parameters" do
       it "creates a new Transaction" do
         expect {
@@ -63,9 +66,9 @@ RSpec.describe "/transactions", type: :request do
         }.to change(Transaction, :count).by(1)
       end
 
-      it "redirects to the created transaction" do
+      it "redirects to inventories" do
         post transactions_url, params: { transaction: valid_attributes }
-        expect(response).to redirect_to(transaction_url(Transaction.last))
+        expect(response).to redirect_to(inventories_url)
       end
     end
 
@@ -78,53 +81,8 @@ RSpec.describe "/transactions", type: :request do
 
       it "renders a successful response (i.e. to display the 'new' template)" do
         post transactions_url, params: { transaction: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to redirect_to(new_transaction_url(:transaction_type => invalid_attributes[:transaction_type], :stock_id => invalid_attributes[:stock_id], :price => invalid_attributes[:unit_price]))
       end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested transaction" do
-        transaction = Transaction.create! valid_attributes
-        patch transaction_url(transaction), params: { transaction: new_attributes }
-        transaction.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "redirects to the transaction" do
-        transaction = Transaction.create! valid_attributes
-        patch transaction_url(transaction), params: { transaction: new_attributes }
-        transaction.reload
-        expect(response).to redirect_to(transaction_url(transaction))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
-        transaction = Transaction.create! valid_attributes
-        patch transaction_url(transaction), params: { transaction: invalid_attributes }
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested transaction" do
-      transaction = Transaction.create! valid_attributes
-      expect {
-        delete transaction_url(transaction)
-      }.to change(Transaction, :count).by(-1)
-    end
-
-    it "redirects to the transactions list" do
-      transaction = Transaction.create! valid_attributes
-      delete transaction_url(transaction)
-      expect(response).to redirect_to(transactions_url)
     end
   end
 end
