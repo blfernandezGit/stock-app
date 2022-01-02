@@ -54,7 +54,6 @@ class TransactionsController < ApplicationController
 
       if checker
         if @transaction.save && update_cash_balance_sell
-          byebug
           redirect_to inventories_path, notice: "Sell transaction completed."
         else
           @transaction.destroy

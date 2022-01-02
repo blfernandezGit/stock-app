@@ -3,6 +3,8 @@ class Stock < ApplicationRecord
 
     has_many :transactions
 
+    validates :code, uniqueness: true
+
     def price
         @client = IEX::Api::Client.new(
             publishable_token: 'pk_2e688a1cf8f444d3a05bc370ffe80a52',

@@ -9,9 +9,7 @@
       <th>Quantity</th>
       <th>Unit price</th>
       <th>Type</th>
-      <th>Is fulfilled</th>
       <th>Date posted</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -22,9 +20,7 @@
         <td><%= transaction.quantity %></td>
         <td><%= transaction.unit_price %></td>
         <td><%= transaction.transaction_type %></td>
-        <td><%= transaction.is_fulfilled %></td>
         <td><%= transaction.created_at.strftime("%-d %B %Y %l:%M %p") %></td>
-        <td><%# link_to 'Show', transaction #%></td>
       </tr>
     <% end %>
   </tbody>

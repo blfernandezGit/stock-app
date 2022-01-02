@@ -10,6 +10,10 @@ class User < ApplicationRecord
   after_create :add_user_cash_data
 
   validates :full_name, presence: true
+  ROLES = %w[trader admin].freeze
+  validates :role, inclusion: { in: ROLES }
+  STATUS = %w[pending accepted rejected].freeze
+  validates :status, inclusion: { in: STATUS }
 
   def admin?
     self.role == 'admin'
