@@ -1,24 +1,28 @@
-<%= form_with scope: :cash, url: cash_in_update_path, local: true do |form|%>
-  <% if cash.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(cash.errors.count, "error") %> prohibited this cash from being saved:</h2>
+<div class="container w-50 d-flex flex-column justify-content-center align-items-center p-4">
+  <%= form_with scope: :cash, url: cash_in_update_path, local: true do |form|%>
+    <% if cash.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(cash.errors.count, "error") %> prohibited this cash from being saved:</h2>
 
-      <ul>
-        <% cash.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% cash.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label "Cash In Amount" %><br/>
+      <%= form.text_field :last_cash_in_amt, :value => 0.0 %>
+    </div>
+
+    <%= form.hidden_field :user_id, value: current_user.id%>
+    
+    <br/>
+
+    <div class="actions">
+      <%= form.submit "Cash In", class: "btn primary-background btn-custom w-100"%>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label "Cash In Amount" %>
-    <%= form.text_field :last_cash_in_amt, :value => 0.0 %>
-  </div>
-
-  <%= form.hidden_field :user_id, value: current_user.id%>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

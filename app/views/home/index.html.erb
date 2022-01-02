@@ -1,11 +1,9 @@
-<div>Stock Overflow</div>
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+<h1><span class="thin">stock</span><span class="thick">overflow</span></h1>
 
 <% if user_signed_in? %>
-    <%= link_to inventories_path do%>
-    Start
-    <% end %>
+    <%= button_to 'Start Trading', inventories_path, class: 'btn primary-background' %>
 <% else %>
-    <%= link_to  new_user_registration_path do%>
-        Start
-    <% end %>
+    <%= button_to 'Join the Community', new_user_registration_path, method: :get, class: "btn primary-background" %>
 <% end %>
+<div>

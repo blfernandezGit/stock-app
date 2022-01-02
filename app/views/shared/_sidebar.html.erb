@@ -1,0 +1,36 @@
+<aside class="sidebar">
+    <div class="toggle">
+        <a class="burger js-menu-toggle">
+            <span></span>
+        </a>
+    </div>
+    <div class="side-inner">
+        <div class="nav-menu">
+            <span class="mx-4"> Welcome <span class="thick"><%= current_user.full_name %></span>! <span>
+            <ul>
+                <% if current_page?(inventories_path) %>
+                    <li class="active js-menu-link-toggle"><%= link_to 'Portfolio', inventories_path %></li>
+                <% else %>
+                    <li class="js-menu-link-toggle"><%= link_to 'Portfolio', inventories_path %></li>
+                <% end %>
+                <% if current_page?(cash_in_edit_path(Cash.find_by(user_id: current_user.id))) %>
+                    <li class="active js-menu-link-toggle"><%= link_to 'Cash In', cash_in_edit_path(Cash.find_by(user_id: current_user.id)) %></li>
+                <% else %>
+                    <li class="js-menu-link-toggle"><%= link_to 'Cash In', cash_in_edit_path(Cash.find_by(user_id: current_user.id)) %></li>
+                <% end %>
+                <% if current_page?(stocks_path) %>
+                    <li class="active js-menu-link-toggle"><%= link_to 'Stock Market', stocks_path %></li>
+                <% else %>
+                    <li class="js-menu-link-toggle"><%= link_to 'Stock Market', stocks_path %></li>
+                <% end %>
+                <% if current_page?(transactions_path) %>
+                    <li class="active js-menu-link-toggle"><%= link_to 'Transaction History', transactions_path %></li>
+                <% else %>
+                    <li class="js-menu-link-toggle"><%= link_to 'Transaction History', transactions_path %></li>
+                <% end %>
+                <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+            </ul>
+        </div>
+    </div>
+    
+</aside>

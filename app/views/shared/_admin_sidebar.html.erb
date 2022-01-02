@@ -1,0 +1,25 @@
+<aside class="sidebar">
+    <div class="toggle">
+        <a class="burger js-menu-toggle">
+            <span></span>
+        </a>
+    </div>
+    <div class="side-inner">
+        <div class="nav-menu">
+            <ul>
+                <% if current_page?(client_list_path) %>
+                    <li class="active js-menu-link-toggle"><%= link_to 'Clients', client_list_path %></li>
+                <% else %>
+                    <li class="js-menu-link-toggle"><%= link_to 'Clients', client_list_path %></li>
+                <% end %>
+                <% if current_page?(new_client_path) %>
+                    <li class="active js-menu-link-toggle"><%= link_to 'New Client', new_client_path %></li>
+                <% else %>
+                    <li class="js-menu-link-toggle"><%= link_to 'New Client', new_client_path %></li>
+                <% end %>
+                <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+            </ul>
+        </div>
+    </div>
+    
+</aside>

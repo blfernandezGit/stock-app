@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     before_action :set_user, only: %i[ show edit update ]
+    before_action :authenticate_admin!, only: %i[index, edit]
 
     def index
         @users = User.where(role: 'trader').order('full_name asc')

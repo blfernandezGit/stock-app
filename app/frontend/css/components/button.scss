@@ -1,0 +1,9 @@
+$my-primary-color: 60px;
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+.btn-custom {
+    width: 5rem;
+    font-size: 0.8rem;
+}

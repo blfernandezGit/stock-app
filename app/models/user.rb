@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :transactions, dependent: :destroy
   has_many :inventories, dependent: :destroy
 
-  after_save :add_user_cash_data
+  after_create :add_user_cash_data
 
   validates :full_name, presence: true
   ROLES = %w[trader admin].freeze

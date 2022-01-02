@@ -1,15 +1,28 @@
-<p id="notice"><%= notice %></p>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </symbol>
+</svg>
 
-<%= form_with scope: :user, url: client_action_path(:client_action => 'Accept'), local: true do |form|%>
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center w-100">
+  <% if notice %>
+    <div class="alert alert-success d-flex align-items-center w-100" role="alert">
+      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+      <div>
+        <%= notice %>
+      </div>
+    </div>
+  <% end %>
+
+<%= form_with scope: :user, url: client_action_path(:client_action => 'Accept'), local: true, class:"container-fluid d-flex flex-column justify-content-center align-items-center" do |form|%>
   <h1>Clients</h1>
 
-  <table>
+  <table class="table w-50">
     <thead>
       <tr>
         <th colspan="1"></th>
         <th>Client name</th>
         <th>Registration Status</th>
-        <th colspan="1"></th>
       </tr>
     </thead>
 
@@ -21,21 +34,17 @@
             <%= check_box_tag "user_ids[]", user.id %>
           <% end %>
           </td>
-          <td><%= user.full_name %></td>
+          <td class=""><%= link_to user.full_name, client_path(user), class: "link-info" %></td>
           <td><%= user.status %></td>
-          <td><%= link_to 'Show', client_path(user) %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 
     <div class="actions">
-        <%= form.submit "Accept" %>
-        <%= form.submit "Reject", formaction: client_action_path(:client_action => 'Reject') %>
+        <%= form.submit "Accept", class: "btn primary-background btn-custom" %>
+        <%= form.submit "Reject", formaction: client_action_path(:client_action => 'Reject'), class: "btn btn-outline-primary btn-custom" %>
     </div>
 
 <% end %>
-
-<br>
-
-<%= link_to 'Create Client Account', new_client_path %>
+</div>

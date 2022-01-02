@@ -1,0 +1,31 @@
+$my-primary-color: 60px;
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+.primary-background {
+    background-color: #f2740e;
+    color: white;
+}
+
+.site-section {
+	padding: 7rem 0;
+}
+
+main {
+	width: calc(100%);
+	height: 100vh;
+	min-height: 580px;
+}
+
+.thin {
+    font-weight: 100;
+}
+
+.thick {
+    font-weight: 800;
+}
+
+.fs-7 {
+    font-size: 0.75rem;
+}
