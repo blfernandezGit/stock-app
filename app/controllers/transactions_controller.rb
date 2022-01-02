@@ -36,7 +36,7 @@ class TransactionsController < ApplicationController
           @transaction.destroy
           @inventory.quantity = @original_quantity
           @cash.balance = @original_cash
-          redirect_to stocks_path, danger: "Something went wrong."
+          redirect_to({ :controller=>'transactions', :action=>'new', :transaction_type=>transaction_params[:transaction_type], :stock_id=>transaction_params[:stock_id], :price=>transaction_params[:unit_price] }, danger: "Something went wrong.")
         end
       else
         redirect_to({ :controller=>'transactions', :action=>'new', :transaction_type=>transaction_params[:transaction_type], :stock_id=>transaction_params[:stock_id], :price=>transaction_params[:unit_price] }, danger: "Not enough cash. Please cash in or lower the quantity to buy.")
@@ -59,7 +59,7 @@ class TransactionsController < ApplicationController
           @transaction.destroy
           @inventory.quantity = @original_quantity
           @cash.balance = @original_cash
-          redirect_to stocks_path, danger: "Something went wrong."
+          redirect_to({ :controller=>'transactions', :action=>'new', :transaction_type=>transaction_params[:transaction_type], :stock_id=>transaction_params[:stock_id], :price=>transaction_params[:unit_price] }, danger: "Something went wrong.")
         end
       else
         redirect_to({ :controller=>'transactions', :action=>'new', :transaction_type=>transaction_params[:transaction_type], :stock_id=>transaction_params[:stock_id], :price=>transaction_params[:unit_price] }, danger: "Quantity to sell should not be greater than your available quantity.")

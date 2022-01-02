@@ -12,8 +12,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     build_resource(sign_up_params)
+    
     @user = resource
     @user.save
+    # byebug
     if @user.persisted?
       WelcomeMailer.send_welcome_email(@user).deliver
       if @user.active_for_authentication?
@@ -25,7 +27,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
     else
       clean_up_passwords resource
-      respond_with resource
+      set_minimum_password_length
+      redirect_to new_registration_path, danger: "Something went wrong."
     end
   end
 
