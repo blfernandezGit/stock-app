@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :inventory do
-    stock_name { "MyString" }
+    stock
     quantity { 1 }
-    user { nil }
+    user
   end
 end

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :stock do
-    name { "MyString" }
-    code { "MyString" }
+    name { "Agilent Technologies Inc." }
+    code { "A" }
   end
 end
