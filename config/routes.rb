@@ -18,5 +18,5 @@ Rails.application.routes.draw do
   post '/admin/clients/action' => 'users#client_action', as: 'client_action'
 
   get '/cash_in' => 'cashes#edit', as: 'cash_in_edit'
-  get '/cash_in/update' => 'cashes#update', as: 'cash_in_update'
+  post '/cash_in/update' => 'cashes#update', as: 'cash_in_update'
 end

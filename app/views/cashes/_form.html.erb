@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label "Cash In Amount" %>
-    <%= form.text_field :balance, :value => 0.0 %>
+    <%= form.text_field :last_cash_in_amt, :value => 0.0 %>
   </div>
 
   <%= form.hidden_field :user_id, value: current_user.id%>
