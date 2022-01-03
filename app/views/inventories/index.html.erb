@@ -38,11 +38,11 @@
   <div class="d-flex flex-row">
     <div class="mx-4">
       <div class="fs-7">Market Value</div>
-      <div>$<%= @market_value%></div>
+      <div>$<%= ((@market_value*100).to_i).to_d/100 %></div>
     </div>
     <div>
       <div class="fs-7">Cost</div>
-      <div>$<%= @cost%></div>
+      <div>$<%= @cost %></div>
     </div>
   </div>
 </div>

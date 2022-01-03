@@ -15,4 +15,17 @@ class Stock < ApplicationRecord
             @client.quote(code).latest_price
         end
     end
+
+    def self.search(search)
+        if search
+            searched_stocks = Stock.where("name ILIKE ? OR code ILIKE ?", "%#{search}%", "%#{search}%")
+            if searched_stocks.length > 0
+                @stocks = searched_stocks.first(5)
+            else
+                @stocks = Stock.first(5)
+            end
+        else
+            @stocks = Stock.first(5)
+        end
+    end
 end
