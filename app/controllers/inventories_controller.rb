@@ -5,6 +5,8 @@ class InventoriesController < ApplicationController
   # GET /inventories or /inventories.json
   def index
     @inventories = @user.inventories
+    @market_value = 0
+    @cost = 0
   end
 
   # GET /inventories/1 or /inventories/1.json

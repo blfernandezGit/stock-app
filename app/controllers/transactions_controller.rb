@@ -78,12 +78,12 @@ class TransactionsController < ApplicationController
     end
 
     def update_cash_balance_buy
-      @expense = transaction_params[:quantity].to_i * Stock.find(transaction_params[:stock_id]).price
+      @expense = transaction_params[:quantity].to_i * (Stock.find(transaction_params[:stock_id]).price.to_d*100).to_i/100
       return false if @cash.balance < @expense
-      @cash.update!(balance: @cash.balance - @expense)
+      @cash.update!(balance: (@cash.balance*100).to_i/100 - (@expense*100).to_i/100)
     end
 
     def update_cash_balance_sell
-      @cash.update!(balance: @cash.balance + transaction_params[:quantity].to_i * Stock.find(transaction_params[:stock_id]).price)
+      @cash.update!(balance: (@cash.balance*100).to_i/100 + transaction_params[:quantity].to_i * (Stock.find(transaction_params[:stock_id]).price.to_d*100).to_i/100)
     end
 end

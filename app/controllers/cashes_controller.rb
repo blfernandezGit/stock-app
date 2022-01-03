@@ -6,7 +6,7 @@ class CashesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @cash.update(balance: @cash.balance + cash_params[:last_cash_in_amt].to_d, last_cash_in_amt: cash_params[:last_cash_in_amt].to_d)
+      if @cash.update(balance: (@cash.balance*100).to_i/100 + (cash_params[:last_cash_in_amt].to_d*100).to_i/100, last_cash_in_amt: (cash_params[:last_cash_in_amt].to_d*100).to_i/100)
         format.html { redirect_to inventories_path, notice: "Cash in was successful." }
       else
         format.html { render :edit, status: :unprocessable_entity }

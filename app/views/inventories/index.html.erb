@@ -4,7 +4,7 @@
   </symbol>
 </svg>
 
-<div class="container-fluid d-flex flex-column justify-content-center align-items-center w-100">
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center w-80">
   <% if notice %>
     <div class="alert alert-success d-flex align-items-center w-100" role="alert">
       <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
@@ -14,15 +14,74 @@
     </div>
   <% end %>
 
-  <h1>Portfolio</h1>
+<% 
+  @inventories.each do |inventory|
+    @market_value += inventory.market_value
+    @cost += current_user.transactions.select('sum(quantity*unit_price) as total_value').where(stock_id: Stock.find(inventory.stock_id).id).map(&:total_value)[0]
+  end
+  @sum = (@market_value*100).to_i/100 - (@cost*100).to_i/100
+  if @sum >= 0
+    @symbol = "+$"
+    @html_class = "green-text"
+  else
+    @symbol = "-$"
+    @sum = -@sum
+    @html_class = "red-text"
+  end
+%>
+
+<div class="container d-flex flex-row">
+  <div>
+    <div>Total Gain</div>
+    <h1 class="<%=@html_class%>"><%= @symbol + @sum.to_s %></h1>
+  </div>
+  <div class="d-flex flex-row">
+    <div class="mx-4">
+      <div class="fs-7">Market Value</div>
+      <div>$<%= @market_value%></div>
+    </div>
+    <div>
+      <div class="fs-7">Cost</div>
+      <div>$<%= @cost%></div>
+    </div>
+  </div>
+</div>
 
   <% @inventories.each do |inventory| %>
     <div class="container border rounded d-flex flex-column w-80 p-4">
-      <h3 class="w-100"><%= Stock.find(inventory.stock_id).name %></h3>
-      <div class="w-100">Gain/loss: $<%= inventory.market_value.to_d - current_user.transactions.select('sum(quantity*unit_price) as total_value').where(stock_id: Stock.find(inventory.stock_id).id).map(&:total_value)[0].to_d %></div>
-      <div class="w-100">Market Value: $<%= inventory.market_value %></div>
-      <div class="w-100">Quantity: <%= inventory.quantity %></div>
-      <div class="w-100">Unit Price: $<%= Stock.find(inventory.stock_id).price %></div>
+      <div class="container d-flex flex-row justify-content-between">
+        <h3><%= Stock.find(inventory.stock_id).name %></h3>
+        <div>
+          <%
+            @sum = (inventory.market_value*100).to_i/100 - (current_user.transactions.select('sum(quantity*unit_price) as total_value').where(stock_id: Stock.find(inventory.stock_id).id).map(&:total_value)[0]*100).to_i/100
+            if @sum >= 0
+              @symbol = "+$"
+              @html_class = "green-text"
+            else
+              @symbol = "-$"
+              @sum = -@sum
+              @html_class = "red-text"
+            end
+          %>
+          <h3 class="<%=@html_class%>"><%= @symbol + @sum.to_s %></h3>
+        </div>
+      </div>
+      <div class="p-4">
+        <div class="d-flex flex-row w-100">
+          <div>
+            <div class="fs-7">Quantity</div>
+            <div><%= inventory.quantity %></div>
+          </div>
+          <div class="mx-4">
+            <div class = "fs-7">Unit Price </div>
+            <div>$<%= Stock.find(inventory.stock_id).price %></div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <div class = "fs-6">Value</div>
+          <h4>$<%= inventory.market_value %></h4>
+        </div>
+      </div>
     </div>
     <br />
   <%end%>
