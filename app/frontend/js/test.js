@@ -11,8 +11,11 @@ $(function() {
     });
 
     $('.js-menu-link-toggle').click(function(e) {
+        var $this = $(this);
+        console.log($this)
         $('body').toggleClass('show-sidebar');
         $('.burger').toggleClass('active');
+        console.log($('.burger'))
     });
 
     $(document).mouseup(function(e) {
@@ -24,7 +27,4 @@ $(function() {
             }
     }
     }); 
-
-    
-
 });

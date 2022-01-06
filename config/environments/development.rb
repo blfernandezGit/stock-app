@@ -48,7 +48,7 @@ config.action_mailer.default_url_options = { host: 'localhost:3000' } #TODO: cha
 config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
   user_name:      'stockoverflowmailer@gmail.com',
-  password:       'cogHec-konwyc-0kymsa',
+  password:       'dibjok-wYmsyg-6ritki',
   domain:         'localhost:3000',
   address:       'smtp.gmail.com',
   port:          '587',

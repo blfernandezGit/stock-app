@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
     before_action :set_user, only: %i[ show edit update ]
     before_action :authenticate_admin!, only: %i[index, edit]
+    helper_method :sort_column, :sort_direction
 
     def index
-        @users = User.where(role: 'trader').order('full_name asc')
+        @users = User.where(role: 'trader').order(sort_column + " " + sort_direction)
         # @pending = User.where(status: 'pending')
         # @accepted = User.where(status: 'accepted')
         # @rejected = User.where(status: 'rejected')
@@ -77,6 +78,14 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
         params.require(:user).permit(:full_name, :password, :email, :role, :password_confirmation, :status)
+    end
+
+    def sort_column
+        User.column_names.include?(params[:sort]) ? params[:sort] : "status"
+    end
+
+    def sort_direction
+        %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 
 end
