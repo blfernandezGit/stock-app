@@ -18,5 +18,7 @@ module StockApp
     #
     config.time_zone = "Beijing"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.assets.initialize_on_precompile = false
   end
 end
