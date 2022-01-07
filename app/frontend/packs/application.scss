@@ -1,11 +1,11 @@
-// * {
-//     font-family: 'Source Sans Pro',sans-serif;
-//     font-weight: normal;
-//     text-decoration: none;
-// }
+* {
+    font-family: 'Source Sans Pro',sans-serif;
+    font-weight: normal;
+    text-decoration: none;
+}
 
 // Import Bootstrap v5  
 @import "~bootstrap/scss/bootstrap";  
-@import '../css/customized_bootstrap.scss';
-@import '../css/components/button.scss';
-@import '../css/components/sidebar.scss';
+@import '../css/customized_bootstrap';
+@import '../css/components/button';
+@import '../css/components/sidebar';

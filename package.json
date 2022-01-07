@@ -1,8 +1,6 @@
 {
   "name": "stock-app",
   "private": true,
-  "main": "app/frontend/packs/application.js",
-  "type": "module",
   "dependencies": {
     "@popperjs/core": "2.0.0-alpha.1",
     "@rails/actioncable": "^6.0.0",
@@ -19,8 +17,5 @@
   "version": "0.1.0",
   "devDependencies": {
     "webpack-dev-server": "^3"
-  },
-  "scripts":{
-    "start": "node --experimental-modules app/frontend/packs/application.js"
   }
 }
