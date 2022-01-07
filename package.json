@@ -19,6 +19,7 @@
     "webpack-dev-server": "^3"
   },
   "scripts":{
-    "start": "node app/frontend/packs/application.js"
+    "start": "node app/frontend/packs/application.js",
+    "type": "module"
   }
 }
