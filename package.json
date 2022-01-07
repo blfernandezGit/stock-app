@@ -1,6 +1,7 @@
 {
   "name": "stock-app",
   "private": true,
+  "main": "app/frontend/packs/application.js",
   "type": "module",
   "dependencies": {
     "@popperjs/core": "2.0.0-alpha.1",
@@ -20,6 +21,6 @@
     "webpack-dev-server": "^3"
   },
   "scripts":{
-    "start": "node app/frontend/packs/application.js"
+    "start": "node --experimental-modules app/frontend/packs/application.js"
   }
 }
